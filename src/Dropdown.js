@@ -14,7 +14,7 @@ const Dropdown = ({
   title = "Select Items..",
   items,
   limit = 5,
-  hasAddPermission = true,
+  hasAddPermission = false,
   onSelection,
   onSearchChange,
   onAddClick,
@@ -167,16 +167,18 @@ const Dropdown = ({
               </li>
             )}
 
-            {items.length === 0 && hasAddPermission && !!searchText.trim() && (
+            {items.length === 0 && !!searchText.trim() && (
               <>
                 <li className="dd-list-item">
                   <button type="button">
                     <span>
                       "<strong>{searchText}</strong>" not found{" "}
                     </span>
-                    <span className="button__action" onClick={handleAdd}>
-                      Add & Select{" "}
-                    </span>
+                    {hasAddPermission && (
+                      <span className="button__action" onClick={handleAdd}>
+                        Add & Select{" "}
+                      </span>
+                    )}
                   </button>
                 </li>
               </>
