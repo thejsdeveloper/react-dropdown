@@ -55,17 +55,6 @@ function App() {
   return (
     <>
       <div className="container">
-        <h1 style={{ textAlign: "center" }}>Select Countries </h1>
-        <Dropdown
-          title={title}
-          items={countries}
-          onSelection={handleSelection}
-          onSearchChange={handleSearch}
-          onAddClick={handleAdd}
-        />
-      </div>
-
-      <div className="container">
         <h1 style={{ textAlign: "center" }}>
           Select Countries (With add permission)
         </h1>
