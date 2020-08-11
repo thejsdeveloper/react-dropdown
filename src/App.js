@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./App.scss";
-import Dropdown from "./Dropdown";
+import Dropdown from "./dropdown/Dropdown";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [storedCountries, setStoredCountries] = useState([]);
-  const [title, setTitle] = useState("Select Country..");
 
   useEffect(() => {
-    fetch("https://restcountries.eu/rest/v2/all?fields=name")
+    fetch("https://restcountries.eu/rest/v2/all?fields=name;flag")
       .then((response) => response.json())
       .then((countries) => {
         const mappedCountries = countries.map((country) => ({
           value: country.name,
           id: country.name,
+          flag: country.flag,
         }));
         setStoredCountries(mappedCountries);
         setCountries(mappedCountries);
@@ -23,14 +23,6 @@ function App() {
         return [];
       });
   }, [setCountries, setStoredCountries]);
-
-  function handleSelection(value) {
-    if (!!value) {
-      setTitle(value);
-    } else {
-      setTitle("Select Country..");
-    }
-  }
 
   function handleSearch(value) {
     if (!!value) {
@@ -52,6 +44,10 @@ function App() {
     setCountries(sortedCountries);
   }
 
+  function handleSelection(selections) {
+    console.log(selections);
+  }
+
   return (
     <>
       <div className="container">
@@ -59,12 +55,13 @@ function App() {
           Select Countries (With add permission)
         </h1>
         <Dropdown
-          title={title}
+          title="Search Countries"
           items={countries}
           onSelection={handleSelection}
           hasAddPermission={true}
           onSearchChange={handleSearch}
           onAddClick={handleAdd}
+          multiSelect
         />
       </div>
     </>
