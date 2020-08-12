@@ -13,18 +13,19 @@
 
 ##Options
 
-| Option           | Usage                                                                           |
-| ---------------- | ------------------------------------------------------------------------------- |
-| title            | This is to set empty state titile `Select Items` by default                     |
-| options          | Pass local data in options                                                      |
-| limit            | To limit the dropdown options                                                   |
-| multSelect       | To enable nultiselect pass `true` , false by default                            |
-| enableSearch     | To enable search pass `true`, `true` by default                                 |
-| hasAddPermission | To allow users to add new option if not available in select, `false` by default |
-| dataUrl          | Pass url for remote api to fetch data from there                                |
-| onSelection      | Emits the array of selected records as soon as user selects                     |
+| Option           | Usage                                                                                                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title            | This is to set empty state titile `Select Items` by default                                                                                                                |
+| options          | Pass local data in options                                                                                                                                                 |
+| asyncOptions     | Pass asyncOptions `data stream` for remote api to fetch data from there you can user [rxjs ajax](https://www.learnrxjs.io/learn-rxjs/operators/creation/ajax) to create it |
+| limit            | To limit the dropdown options                                                                                                                                              |
+| multSelect       | To enable nultiselect pass `true` , false by default                                                                                                                       |
+| enableSearch     | To enable search pass `true`, `true` by default                                                                                                                            |
+| hasAddPermission | To allow users to add new option if not available in select, `false` by default                                                                                            |
 
-`Note that if data url and option both are provided options are ignored`
+| onSelection | Emits the array of selected records as soon as user selects |
+
+`Note that if asyncOptions and option both are provided options are ignored`
 
 ## Screenshots
 
