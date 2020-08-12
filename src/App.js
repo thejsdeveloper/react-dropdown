@@ -1,6 +1,9 @@
 import React from "react";
 import "./App.scss";
 import Dropdown from "./dropdown/Dropdown";
+import { ajax } from "rxjs/ajax";
+import { map } from "rxjs/operators";
+
 const options = [
   {
     icon: "https://restcountries.eu/data/afg.svg",
@@ -43,6 +46,17 @@ const options = [
     id: "Anguilla",
   },
 ];
+const asyncData = ajax(
+  `https://restcountries.eu/rest/v2/all?fields=name;flag`
+).pipe(
+  map(({ response }) => {
+    return response.map((record) => ({
+      value: record.name,
+      id: record.name,
+      icon: record.flag,
+    }));
+  })
+);
 
 function App() {
   const dataUrl = `https://restcountries.eu/rest/v2/all?fields=name;flag`;
@@ -63,7 +77,7 @@ function App() {
           title="Search Countries"
           onSelection={handleSelection}
           hasAddPermission={true}
-          dataUrl={dataUrl}
+          asyncOptions={asyncData}
           multiSelect
           limit={5}
         />

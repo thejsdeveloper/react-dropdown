@@ -13,8 +13,9 @@ import { DropdownOptions } from "./DropdownOptions";
  * multSelect: To enable nultiselect pass true , false by default
  * enableSearch: To enable search pass true, true by default
  * hasAddPermission: To allow users to add new option if not available in select, false by default
- * dataUrl: Pass url for remote api to fetch data from there,
+ * asyncOptions: Pass [asyncOptions] dataStream for remote api to fetch data from there,
  *          Note that if data url and option both are provided options are ignored
+ *          use [https://www.learnrxjs.io/learn-rxjs/operators/creation/ajax] for creating it
  * onSelection: Emits the array of selected records as soon as user selects
  */
 const Dropdown = ({
@@ -25,7 +26,7 @@ const Dropdown = ({
   enableSearch = true,
   options = [],
   onSelection,
-  dataUrl,
+  asyncOptions,
 }) => {
   const [items, setItems] = useState(options);
   const [storedItems, setStoredItems] = useState(options);
@@ -37,24 +38,22 @@ const Dropdown = ({
   const inputRef = useRef();
 
   useEffect(() => {
-    if (!!dataUrl) {
-      fetch(dataUrl)
-        .then((response) => response.json())
-        .then((records) => {
-          const mappedRecords = records.map((record) => ({
-            value: record.name,
-            id: record.name,
-            icon: record.flag,
-          }));
-          setStoredItems(mappedRecords);
-          setItems(mappedRecords);
-        })
-        .catch((error) => {
-          console.error(error);
-          return [];
-        });
+    if (!!asyncOptions) {
+      const subscription = asyncOptions.subscribe(
+        (items) => {
+          setStoredItems(items);
+          setItems(items);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+
+      return () => {
+        subscription.unsubscribe();
+      };
     }
-  }, [setItems, setStoredItems, dataUrl]);
+  }, [setItems, setStoredItems, asyncOptions]);
 
   useOnClickOutside(ref, () => {
     setSearchText("");
