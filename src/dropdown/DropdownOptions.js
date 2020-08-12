@@ -36,8 +36,8 @@ export const DropdownOptions = ({
             onClick={() => handleOnClick(item)}
             className={isItemInSelection(item) ? "selected" : ""}
           >
-            {item.flag ? (
-              <img src={item.flag} alt="{item.value} flag" />
+            {item.icon ? (
+              <img src={item.icon} alt="item icon" />
             ) : (
               <span className="dd-list-item__placeholder_flag">
                 <FaFlagCheckered color="green" />

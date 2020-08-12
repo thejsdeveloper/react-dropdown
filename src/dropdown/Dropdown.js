@@ -44,7 +44,7 @@ const Dropdown = ({
           const mappedRecords = records.map((record) => ({
             value: record.name,
             id: record.name,
-            flag: record.flag,
+            icon: record.flag,
           }));
           setStoredItems(mappedRecords);
           setItems(mappedRecords);
