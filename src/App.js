@@ -45,7 +45,7 @@ const options = [
 ];
 
 function App() {
-  const dataUrl = `https://restcountries.eu/rest/v2/all?fields=name;icon`;
+  const dataUrl = `https://restcountries.eu/rest/v2/all?fields=name;flag`;
 
   function handleSelection(selections) {
     console.log(selections);
