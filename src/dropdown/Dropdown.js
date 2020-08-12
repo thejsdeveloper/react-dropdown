@@ -7,23 +7,28 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { DropdownOptions } from "./DropdownOptions";
 /***
  * features:
- * Title: 'Select Items' by default
- * Limit: 5 is default
- * multSelect: false by default
- * enableSearch: true by default
- * hasAddPermission: false by default
+ * title: This is to set empty state titile 'Select Items' by default
+ * options: Pass local data in options
+ * limit: To limit the dropdown options
+ * multSelect: To enable nultiselect pass true , false by default
+ * enableSearch: To enable search pass true, true by default
+ * hasAddPermission: To allow users to add new option if not available in select, false by default
+ * dataUrl: Pass url for remote api to fetch data from there,
+ *          Note that if data url and option both are provided options are ignored
+ * onSelection: Emits the array of selected records as soon as user selects
  */
 const Dropdown = ({
   title = "Select Items..",
-  limit = 5,
+  limit,
   hasAddPermission = false,
   multiSelect = false,
   enableSearch = true,
-  items,
+  options = [],
   onSelection,
-  onSearchChange, // need to move in here
-  onAddClick, // move here
+  dataUrl,
 }) => {
+  const [items, setItems] = useState(options);
+  const [storedItems, setStoredItems] = useState(options);
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -31,9 +36,28 @@ const Dropdown = ({
   const ref = useRef();
   const inputRef = useRef();
 
+  useEffect(() => {
+    if (!!dataUrl) {
+      fetch(dataUrl)
+        .then((response) => response.json())
+        .then((records) => {
+          const mappedRecords = records.map((record) => ({
+            value: record.name,
+            id: record.name,
+            flag: record.flag,
+          }));
+          setStoredItems(mappedRecords);
+          setItems(mappedRecords);
+        })
+        .catch((error) => {
+          console.error(error);
+          return [];
+        });
+    }
+  }, [setItems, setStoredItems, dataUrl]);
+
   useOnClickOutside(ref, () => {
     setSearchText("");
-    onSearchChange("");
     setOpen(false);
   });
 
@@ -41,11 +65,20 @@ const Dropdown = ({
     inputRef.current = new Subject();
     const subscription = inputRef.current
       .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe(onSearchChange);
+      .subscribe((value) => {
+        if (!!value) {
+          const filteredItems = storedItems.filter((country) =>
+            country.value.toLowerCase().includes(value.toLowerCase())
+          );
+          setItems(filteredItems);
+        } else {
+          setItems(storedItems);
+        }
+      });
     return () => {
       subscription.unsubscribe();
     };
-  }, [onSearchChange]);
+  }, [storedItems]);
 
   function handleOnClick(item) {
     if (!selection.some((current) => current.id === item.id)) {
@@ -84,9 +117,12 @@ const Dropdown = ({
       value: capitalisedValue,
     };
 
-    onAddClick(country);
+    const sortedCountries = [...storedItems, country].sort((a, b) =>
+      a.value.toLowerCase() > b.value.toLowerCase() ? 1 : -1
+    );
+    setStoredItems(sortedCountries);
+    setItems(sortedCountries);
     handleOnClick(country);
-    setOpen(false);
     setSearchText("");
   }
 

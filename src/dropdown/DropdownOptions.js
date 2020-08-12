@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaFlagCheckered } from "react-icons/fa";
 
 export const DropdownOptions = ({
   options,
-  limit,
+  limit = -1,
   handleOnClick,
   isItemInSelection,
   searchText,
@@ -20,7 +20,7 @@ export const DropdownOptions = ({
   }
 
   useEffect(() => {
-    if (!showAll) {
+    if (limit > -1 && !showAll) {
       setDropdownOption(options.slice(0, limit));
     } else {
       setDropdownOption(options);
@@ -36,14 +36,20 @@ export const DropdownOptions = ({
             onClick={() => handleOnClick(item)}
             className={isItemInSelection(item) ? "selected" : ""}
           >
-            <img src={item.flag} alt="{item.value} flag" />
+            {item.flag ? (
+              <img src={item.flag} alt="{item.value} flag" />
+            ) : (
+              <span className="dd-list-item__placeholder_flag">
+                <FaFlagCheckered color="green" />
+              </span>
+            )}
             <span>{item.value}</span>
             <span>{isItemInSelection(item) && <FaCheck color="green" />}</span>
           </button>
         </li>
       ))}
 
-      {options.length - limit > 0 && (
+      {limit > 0 && options.length - limit > 0 && (
         <li className="dd-list-item">
           {!showAll ? (
             <button type="button" onClick={() => handleShowAll(true)}>

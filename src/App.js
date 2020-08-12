@@ -1,48 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.scss";
 import Dropdown from "./dropdown/Dropdown";
+const options = [
+  {
+    flag: "https://restcountries.eu/data/afg.svg",
+    value: "Afghanistan",
+    id: "Afghanistan",
+  },
+  {
+    flag: "https://restcountries.eu/data/ala.svg",
+    value: "Åland Islands",
+    id: "Åland Islands",
+  },
+  {
+    flag: "https://restcountries.eu/data/alb.svg",
+    value: "Albania",
+    id: "Albania",
+  },
+  {
+    flag: "https://restcountries.eu/data/dza.svg",
+    value: "Algeria",
+    id: "Algeria",
+  },
+  {
+    flag: "https://restcountries.eu/data/asm.svg",
+    value: "American Samoa",
+    id: "American Samoa",
+  },
+  {
+    flag: "https://restcountries.eu/data/and.svg",
+    value: "Andorra",
+    id: "Andorra",
+  },
+  {
+    flag: "https://restcountries.eu/data/ago.svg",
+    value: "Angola",
+    id: "Angola",
+  },
+  {
+    flag: "https://restcountries.eu/data/aia.svg",
+    value: "Anguilla",
+    id: "Anguilla",
+  },
+];
 
 function App() {
-  const [countries, setCountries] = useState([]);
-  const [storedCountries, setStoredCountries] = useState([]);
-
-  useEffect(() => {
-    fetch("https://restcountries.eu/rest/v2/all?fields=name;flag")
-      .then((response) => response.json())
-      .then((countries) => {
-        const mappedCountries = countries.map((country) => ({
-          value: country.name,
-          id: country.name,
-          flag: country.flag,
-        }));
-        setStoredCountries(mappedCountries);
-        setCountries(mappedCountries);
-      })
-      .catch((error) => {
-        console.error(error);
-        return [];
-      });
-  }, [setCountries, setStoredCountries]);
-
-  function handleSearch(value) {
-    if (!!value) {
-      const filteredCountries = storedCountries.filter((country) =>
-        country.value.toLowerCase().includes(value.toLowerCase())
-      );
-      setCountries(filteredCountries);
-    } else {
-      setCountries(storedCountries);
-    }
-  }
-
-  function handleAdd(country) {
-    const sortedCountries = [...storedCountries, country].sort((a, b) =>
-      a.value.toLowerCase() > b.value.toLowerCase() ? 1 : -1
-    );
-
-    setStoredCountries(sortedCountries);
-    setCountries(sortedCountries);
-  }
+  const dataUrl = `https://restcountries.eu/rest/v2/all?fields=name;flag`;
 
   function handleSelection(selections) {
     console.log(selections);
@@ -51,16 +54,46 @@ function App() {
   return (
     <>
       <div className="container">
-        <h1 style={{ textAlign: "center" }}>
-          Select Countries (With add permission)
-        </h1>
+        <h1 style={{ textAlign: "center" }}>Select Countries</h1>
+        <p>
+          <strong>Features:</strong> Remote Data, Multi Select, List Limit, With
+          Add permission Search
+        </p>
         <Dropdown
           title="Search Countries"
-          items={countries}
           onSelection={handleSelection}
           hasAddPermission={true}
-          onSearchChange={handleSearch}
-          onAddClick={handleAdd}
+          dataUrl={dataUrl}
+          multiSelect
+          limit={5}
+        />
+      </div>
+
+      <div className="container">
+        <h1 style={{ textAlign: "center" }}>Select Countries</h1>
+        <p>
+          <strong>Features:</strong> Remote Data, Single Select, No search, No
+          limit on records, No add permission
+        </p>
+        <Dropdown
+          title="Search Countries"
+          onSelection={handleSelection}
+          dataUrl={dataUrl}
+          enableSearch={false}
+        />
+      </div>
+
+      <div className="container">
+        <h1 style={{ textAlign: "center" }}>Select Countries</h1>
+        <p>
+          <strong>Features:</strong> Local Data, Multi Select, With Add
+          permission Search
+        </p>
+        <Dropdown
+          title="Search Countries"
+          onSelection={handleSelection}
+          hasAddPermission={true}
+          options={options}
           multiSelect
         />
       </div>

@@ -143,6 +143,11 @@ body {
           background-color: #f5f5f5;
         }
 
+        &:last-of-type {
+          background-color: none;
+          outline: none;
+        }
+
         span:last-of-type {
           margin-left: auto;
         }
@@ -154,6 +159,17 @@ body {
         }
       }
     }
+  }
+}
+
+.dd-list-item__placeholder_flag {
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+  margin-right: 10px;
+  svg {
+    width: 100%;
+    height: 100%;
   }
 }
 
