@@ -2,12 +2,29 @@
 
 [Live Site](https://thejsdeveloper-react-dropdown.netlify.app/)
 
-- It is a dropdown which fetches data from remote api (currently it is fetch lsit of all countries) and show it based on limit set by user.
+- It is a dropdown which takes data from local as well as from remote api (currently it is fetch lsit of all countries) and show it based on limit set by user.
 - When you click on dropdown header it will show records
 - Click on outside will close the dropdown.
 - When user click on last button which shows how many more records are hidden, It shows all the items.
 - User can search the records by entering filter text in input box which is debounced for performance.
 - If something is not found and user has previlage to add reords, user can add it to list.
+- User can also hide search box if not required
+- If user does not pass limit, dropdown will show all the `items
+
+##Options
+
+| Option           | Usage                                                                           |
+| ---------------- | ------------------------------------------------------------------------------- |
+| title            | This is to set empty state titile `Select Items` by default                     |
+| options          | Pass local data in options                                                      |
+| limit            | To limit the dropdown options                                                   |
+| multSelect       | To enable nultiselect pass `true` , false by default                            |
+| enableSearch     | To enable search pass `true`, `true` by default                                 |
+| hasAddPermission | To allow users to add new option if not available in select, `false` by default |
+| dataUrl          | Pass url for remote api to fetch data from there                                |
+| onSelection      | Emits the array of selected records as soon as user selects                     |
+
+`Note that if data url and option both are provided options are ignored`
 
 ## Screenshots
 
