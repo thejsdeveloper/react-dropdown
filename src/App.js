@@ -80,6 +80,7 @@ function App() {
           asyncOptions={asyncData}
           multiSelect
           limit={5}
+          ignoreIcon
         />
       </div>
 

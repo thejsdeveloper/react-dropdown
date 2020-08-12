@@ -27,6 +27,7 @@ const Dropdown = ({
   options = [],
   onSelection,
   asyncOptions,
+  ignoreIcon = false,
 }) => {
   const [items, setItems] = useState(options);
   const [storedItems, setStoredItems] = useState(options);
@@ -171,6 +172,7 @@ const Dropdown = ({
             searchText={searchText}
             hasAddPermission={hasAddPermission}
             handleAdd={handleAdd}
+            ignoreIcon={ignoreIcon}
           />
         </>
       )}

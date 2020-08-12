@@ -13,6 +13,16 @@
 
 ##Options
 
+- Option should be in this format
+
+```
+    {
+      id: [uniqueId] string,
+      value: string,
+      icon: [iconUrl] string
+    }
+```
+
 | Option           | Usage                                                                                                                                                                      |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | title            | This is to set empty state titile `Select Items` by default                                                                                                                |
@@ -22,8 +32,8 @@
 | multSelect       | To enable nultiselect pass `true` , false by default                                                                                                                       |
 | enableSearch     | To enable search pass `true`, `true` by default                                                                                                                            |
 | hasAddPermission | To allow users to add new option if not available in select, `false` by default                                                                                            |
-
-| onSelection | Emits the array of selected records as soon as user selects |
+| onSelection      | Emits the array of selected records as soon as user selects                                                                                                                |
+| ignoreIcon       | If you do not want to show icon, Default is a flag icon for flag                                                                                                           |
 
 `Note that if asyncOptions and option both are provided options are ignored`
 
@@ -60,3 +70,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
+
+```
+
+```

@@ -9,6 +9,7 @@ export const DropdownOptions = ({
   searchText,
   hasAddPermission,
   handleAdd,
+  ignoreIcon,
 }) => {
   const [dropdownOptions, setDropdownOption] = useState(
     options.slice(0, limit)
@@ -36,7 +37,7 @@ export const DropdownOptions = ({
             onClick={() => handleOnClick(item)}
             className={isItemInSelection(item) ? "selected" : ""}
           >
-            {item.icon ? (
+            {ignoreIcon ? null : item.icon ? (
               <img src={item.icon} alt="item icon" />
             ) : (
               <span className="dd-list-item__placeholder_flag">
