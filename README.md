@@ -1,6 +1,6 @@
 # React Select (Dropdown)
 
-[Live Site](https://thejsdeveloper-react-dropdown.netlify.app/)
+[Live Site](https://thejsdeveloper-react-dropdown-dev.netlify.app/)
 
 - It is a dropdown which takes data from local as well as from remote api (currently it is fetch lsit of all countries) and show it based on limit set by user.
 - When you click on dropdown header it will show records
